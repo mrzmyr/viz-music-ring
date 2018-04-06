@@ -1,19 +1,24 @@
 let mic;
 let shouldFilter = [false, false];
-let canvas;
-let playbackSpeed = 1;
+
+let container;
+let speedContainer;
+
 let copies = 1;
 let currentSize = 0;
 let step = 5;
 let radius = 30;
 let total = 100;
+let isX = 0;
+let shouldX = 0;
 
 function preload() {
   mySound = loadSound('audio/kilojoule.mp3');
 }
 
 function setup() {
-  canvas = document.querySelector('canvas');
+  container = document.body;
+  speedContainer = document.getElementById('speed')
 
   createCanvas(windowWidth, windowHeight);
   background(0)
@@ -26,7 +31,10 @@ function setup() {
 }
 
 function mousePressed() {
-  mySound.rate(mouseX / width * 3)
+  let speed = floor(mouseX / width * 3 * 100) / 100;
+  mySound.rate(speed)
+  speedContainer.innerText = floor(speed * 100);
+  shouldX = mouseX;
 }
 
 function draw() {
@@ -47,25 +55,39 @@ function draw() {
   noFill()
   fft.analyze();
 
-  for (var i = 0; i < 3; i++) {
-    for (var i = 0; i < total; i++) {
-      let y = cos(PI*t*2+i*PI*2/total) * radius;
-      let x = sin(PI*t*2+i*PI*2/total) * radius;
-      stroke(`hsla(${floor(abs(sin(t)*255))}, 80%, 50%, ${i/total})`)
-      ellipse(w+x, h+y, fft.getEnergy(300)/300*h + 50)
-    }
+  if(shouldX > isX) {
+    isX += 10;
+  }
+  if(shouldX < isX) {
+    isX -= 10;
   }
 
-  let a = random([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]);
+  for (var i = 0; i < total; i++) {
+    let y = cos(PI*t*2+i*PI*2/total) * radius;
+    let x = sin(PI*t*2+i*PI*2/total) * radius;
+    stroke(`hsla(${floor(abs(sin(t)*255))}, 80%, 50%, ${i/total})`)
+    ellipse(w+x, h+y, fft.getEnergy(300)/h*h+100)
+  }
+
+  let zeros = 100 - floor((isX / width) * 100);
+  let rzeros = [1];
+
+  console.log(zeros);
+
+  for (var i = 0; i < zeros; i++) {
+    rzeros.push(0)
+  }
+
+  let a = random(rzeros);
 
   if(shouldFilter[0] && !shouldFilter[1]) {
     shouldFilter[1] = true;
-    canvas.classList.toggle('posterize');
+    container.classList.toggle('posterize');
     setTimeout(() => { shouldFilter[1] = false; }, 3000)
   }
 
   if(shouldFilter[0] & a == 1) {
-    canvas.classList.toggle('invert')
+    container.classList.toggle('invert')
   }
 
   if(a == 1 && !shouldFilter[0]) {
