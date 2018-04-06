@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="lib/p5.js"></script>
+  <script src="lib/p5.sound.js"></script>
+  <script src="lib/p5.dom.js"></script>
+  <script src="index.js"></script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: "Lucida Console", Monaco, monospace;
+      color: #FFF;
+    }
+
+    .posterize {
+      filter: saturate(4);
+    }
+
+    .invert {
+      filter: invert(100%);
+    }
+
+    #credits a {
+      color: #FFF;
+    }
+
+    #credits {
+      font-size: 12px;
+      position: fixed;
+      bottom: 50px;
+      right: 20px;
+      z-index: 4;
+      background: #000;
+      padding: 10px;
+    }
+  </style>
+  <div id="credits">
+    <a href="https://twitter.com/mrzmyr" target="_blank">music &amp; code @mrzmyr</a> 
+  </div>
+</head>
+<body>
+</body>
+</html>
