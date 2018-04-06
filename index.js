@@ -1,4 +1,3 @@
-let mic;
 let shouldFilter = [false, false];
 
 let container;
@@ -23,8 +22,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0)
 
-  mic = new p5.AudioIn();
-  mic.start();
   mySound.loop()
 
   fft = new p5.FFT();
