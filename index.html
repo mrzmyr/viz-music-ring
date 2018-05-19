@@ -37,13 +37,38 @@
       background: #000;
       padding: 10px;
     }
+
+    #start {
+      background: #000;
+      font-weight: bold;
+      color: #FFF;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      border: 0;
+      z-index: 4;
+      width: 100%;
+      cursor: pointer;
+      font-size: 120px;
+      font-family: Impact, Charcoal, sans-serif;
+      cursor: progress;
+    }
+
+    #start:not([disabled]):hover {
+      cursor: pointer;
+      background: #FFF;
+      color: #000;
+    }
   </style>
+</head>
+<body>
   <div id="credits">
     click somewhere;
     <span id="speed">100</span> bpm;
     <a href="https://twitter.com/mrzmyr" target="_blank">music &amp; code @mrzmyr</a>
   </div>
-</head>
-<body>
+  <button id="start" disabled>Loading…</button>
 </body>
 </html>

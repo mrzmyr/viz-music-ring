@@ -17,12 +17,25 @@ function preload() {
 
 function setup() {
   container = document.body;
-  speedContainer = document.getElementById('speed')
+  speedContainer = document.getElementById('speed');
 
   createCanvas(windowWidth, windowHeight);
   background(0)
 
-  mySound.loop()
+  const start = document.querySelector('#start');
+
+  start.innerText = 'Play.'
+  start.disabled = false;
+
+  start.addEventListener('click', () => {
+    start.remove();
+
+    if (getAudioContext().state !== 'running') {
+      getAudioContext().resume();
+    }
+    
+    mySound.loop()
+  })
 
   fft = new p5.FFT();
 }
@@ -68,8 +81,6 @@ function draw() {
 
   let zeros = 100 - floor((isX / width) * 100);
   let rzeros = [1];
-
-  console.log(zeros);
 
   for (var i = 0; i < zeros; i++) {
     rzeros.push(0)
